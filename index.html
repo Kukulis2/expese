@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Expense Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="light">
+    <div class="container">
+        <header>
+            <h1>Expense Tracker</h1>
+            <div class="toolbar">
+                <button id="theme-toggle" class="icon-button" title="Toggle Dark/Light Mode">🌙</button>
+                <button id="clear-all" class="icon-button warning" title="Clear All Data">🗑️</button>
+            </div>
+        </header>
+
+        <div class="tab-container">
+            <button class="tab active" data-tab="expenses">Expenses</button>
+            <button class="tab" data-tab="budgets">Budgets</button>
+        </div>
+
+        <div class="tab-content" id="expenses-tab">
+            <form id="expense-form">
+                <div class="form-row">
+                    <input type="text" id="expense-name" placeholder="Expense Name" required>
+                    <input type="number" id="expense-amount" placeholder="Amount" step="0.01" required>
+                </div>
+                <div class="form-row">
+                    <select id="expense-category" required>
+                        <option value="Food">Food</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Others">Others</option>
+                        <option value="Add-category">Add Category</option>
+                    </select>
+                    <input type="date" id="expense-date" required>
+                </div>
+                <div class="form-row">
+                    <input type="text" id="new-category" placeholder="New Category" style="display: none;">
+                    <select id="expense-recurrence">
+                        <option value="none">One-time</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <textarea id="expense-notes" placeholder="Notes (optional)"></textarea>
+                </div>
+                <button type="submit" class="primary-button">Add Expense</button>
+            </form>
+
+            <div class="filter-controls">
+                <div class="search-container">
+                    <input type="text" id="search-expenses" placeholder="Search expenses...">
+                </div>
+                <div class="filter-container">
+                    <label for="time-range">Time Range:</label>
+                    <select id="time-range">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">Last 7 Days</option>
+                        <option value="month">Last 30 Days</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="stats-summary" class="stats-panel"></div>
+
+            <h2>Categories <button id="view-toggle" class="small-button">View Timeline</button></h2>
+            <ul id="category-list"></ul>
+            <h2>Total: <span id="total-amount">$0.00</span></h2>
+            <div id="chart-container"></div>
+        </div>
+
+         <div class="tab-content hidden" id="budgets-tab">
+            <h2>Budget Management</h2>
+            <form id="budget-form">
+                <div class="form-row">
+                    <select id="budget-category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Food">Food</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <input type="number" id="budget-amount" placeholder="Budget Amount" step="0.01" required>
+                </div>
+                <button type="submit" class="primary-button">Set Budget</button>
+            </form>
+
+
+    <script src="script.js"></script>
+    <script>
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                this.classList.add('active');
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId + '-tab').classList.remove('hidden');
+            });
+        });
+
+    </script>
+</body>
+</html>
